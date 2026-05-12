@@ -94,6 +94,12 @@ public abstract class ClassUtils {
 	/** The ".class" file suffix. */
 	public static final String CLASS_FILE_SUFFIX = ".class";
 
+	/**
+	 * The ".package-info" suffix for package class names.
+	 * @since 7.0.8
+	 */
+	public static final String PACKAGE_INFO_SUFFIX = ".package-info";
+
 	/** Precomputed value for the combination of private, static and final modifiers. */
 	private static final int NON_OVERRIDABLE_MODIFIER = Modifier.PRIVATE | Modifier.STATIC | Modifier.FINAL;
 
