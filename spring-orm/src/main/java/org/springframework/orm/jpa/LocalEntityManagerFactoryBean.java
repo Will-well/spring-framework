@@ -76,9 +76,6 @@ public class LocalEntityManagerFactoryBean extends AbstractEntityManagerFactoryB
 
 	private static final String NON_JTA_DATASOURCE_PROPERTY = "jakarta.persistence.nonJtaDataSource";
 
-	private static final String PACKAGE_INFO_SUFFIX = ".package-info";
-
-
 	private @Nullable PersistenceConfiguration configuration;
 
 	private String @Nullable [] packagesToScan;
@@ -249,7 +246,7 @@ public class LocalEntityManagerFactoryBean extends AbstractEntityManagerFactoryB
 			// Expose managed packages as package-info class names if not included already
 			// (accepted by PersistenceConfiguration on Hibernate as well as EclipseLink)
 			for (String managedPackage : result.getManagedPackages()) {
-				classNameSet.add(managedPackage + PACKAGE_INFO_SUFFIX);
+				classNameSet.add(managedPackage + ClassUtils.PACKAGE_INFO_SUFFIX);
 			}
 			// Expose pre-resolved Class references to PersistenceConfiguration.
 			PersistenceConfiguration config = getPersistenceConfiguration();

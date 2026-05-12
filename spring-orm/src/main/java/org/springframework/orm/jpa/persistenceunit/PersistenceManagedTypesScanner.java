@@ -59,8 +59,6 @@ public final class PersistenceManagedTypesScanner {
 
 	private static final String CLASS_RESOURCE_PATTERN = "/**/*.class";
 
-	private static final String PACKAGE_INFO_SUFFIX = ".package-info";
-
 	private static final String IGNORE_CLASSFORMAT_PROPERTY_NAME = "spring.classformat.ignore";
 
 	private static final boolean shouldIgnoreClassFormatException =
@@ -157,9 +155,9 @@ public final class PersistenceManagedTypesScanner {
 							}
 						}
 					}
-					if (className.endsWith(PACKAGE_INFO_SUFFIX)) {
+					if (className.endsWith(ClassUtils.PACKAGE_INFO_SUFFIX)) {
 						scanResult.managedPackages.add(className.substring(0,
-								className.length() - PACKAGE_INFO_SUFFIX.length()));
+								className.length() - ClassUtils.PACKAGE_INFO_SUFFIX.length()));
 					}
 				}
 				catch (FileNotFoundException ex) {
