@@ -380,10 +380,12 @@ public abstract class EntityManagerFactoryUtils {
 
 	/**
 	 * Determine the {@code jakarta.persistence.EntityAgent} class.
-	 * @return the {@code EntityAgent} class, or {@code null} if not available
-	 * @since 7.0.4
+	 * <p>Intended for internal adaptation to JPA 3.2 vs 4.0.
+	 * @return the {@code EntityAgent} class (on JPA 4.0),
+	 * or {@code null} if not available (on JPA 3.2)
+	 * @since 7.1
 	 */
-	static @Nullable Class<?> getEntityAgentClass() {
+	public static @Nullable Class<?> getEntityAgentClass() {
 		return (CREATE_ENTITY_AGENT_METHOD != null ? CREATE_ENTITY_AGENT_METHOD.getReturnType() : null);
 	}
 

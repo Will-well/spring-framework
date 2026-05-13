@@ -38,6 +38,7 @@ import org.apache.commons.logging.LogFactory;
 import org.jspecify.annotations.Nullable;
 
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ConcurrentReferenceHashMap;
@@ -179,17 +180,36 @@ public abstract class SharedEntityManagerCreator {
 
 	/**
 	 * Create a transactional EntityAgent proxy for the given EntityManagerFactory.
+	 * @param emf the EntityManagerFactory to obtain EntityAgents from as needed
+	 * @return a shareable transactional EntityAgent proxy
+	 * (typed to {@code Object} for compatibility with JPA 3.2; this will change
+	 * to {@code EntityAgent} once Spring establishes a JPA 4.0 minimum baseline)
+	 * @since 7.1
+	 */
+	public static Object createSharedEntityAgent(EntityManagerFactory emf) {
+		return createSharedEntityAgent(emf, null);
+	}
+
+	/**
+	 * Create a transactional EntityAgent proxy for the given EntityManagerFactory.
 	 * @param emf the EntityManagerFactory to obtain EntityAgentss from as needed
 	 * @param properties the properties to be passed into the
 	 * {@code createEntityAgent} call (may be {@code null})
-	 * @param ifc the interfaces to be implemented by the EntityAgent
 	 * @return a shareable transactional EntityAgent proxy
-	 * @since 7.0.4
+	 * (typed to {@code Object} for compatibility with JPA 3.2; this will change
+	 * to {@code EntityAgent} once Spring establishes a JPA 4.0 minimum baseline)
+	 * @since 7.1
 	 */
-	static Object createSharedEntityAgent(EntityManagerFactory emf, @Nullable Map<?, ?> properties, Class<?> ifc) {
+	public static Object createSharedEntityAgent(EntityManagerFactory emf, @Nullable Map<?, ?> properties) {
 		ClassLoader cl = null;
+		Class<?> ifc = null;
 		if (emf instanceof EntityManagerFactoryInfo emfInfo) {
 			cl = emfInfo.getBeanClassLoader();
+			ifc = emfInfo.getEntityAgentInterface();
+		}
+		if (ifc == null) {
+			ifc = EntityManagerFactoryUtils.getEntityAgentClass();
+			Assert.state(ifc != null, "JPA 4.0 EntityAgent class not found");
 		}
 		return Proxy.newProxyInstance(
 				(cl != null ? cl : SharedEntityManagerCreator.class.getClassLoader()),

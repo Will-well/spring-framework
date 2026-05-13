@@ -261,6 +261,11 @@ public abstract class AbstractEntityManagerFactoryBean implements
 		return this.entityManagerInterface;
 	}
 
+	@Override
+	public @Nullable Class<?> getEntityAgentInterface() {
+		return this.entityAgentInterface;
+	}
+
 	/**
 	 * Specify the vendor-specific JpaDialect implementation to associate with
 	 * this EntityManagerFactory. This will be exposed through the
@@ -419,8 +424,7 @@ public abstract class AbstractEntityManagerFactoryBean implements
 
 		this.sharedEntityManager = SharedEntityManagerCreator.createSharedEntityManager(this.entityManagerFactory);
 		if (this.entityAgentInterface != null) {
-			this.sharedEntityAgent = SharedEntityManagerCreator.createSharedEntityAgent(
-					this.entityManagerFactory, null, this.entityAgentInterface);
+			this.sharedEntityAgent = SharedEntityManagerCreator.createSharedEntityAgent(this.entityManagerFactory);
 		}
 	}
 
