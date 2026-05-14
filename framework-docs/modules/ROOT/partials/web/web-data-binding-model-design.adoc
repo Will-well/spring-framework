@@ -34,10 +34,11 @@ It is easy to miss or add others over time that should also be excluded.
 
 By default, `DataBinder` applies both constructor and setter binding.
 This is fine with immutable objects and dedicated objects, but for domain objects, you must
-remember to declare `allowFields`. To ensure data binding is only used in declarative style where
-expected inputs are explicitly declared, you can set  `declarativeBinding=true` on `DataBinder`.
-In this mode, `DataBinding` applies constructor binding, and additionally setter binding if `allowedFields` is set.
-The below shows how to set this flag globally:
+remember to set `allowedFields`. To ensure data binding is only used in declarative style where
+expected inputs are explicitly declared, you can set  `declarativeBinding` on `DataBinder`.
+That applies constructor binding always, and setter binding conditionally if `allowedFields` is set.
+The below shows how to set this flag globally, or
+you can also narrow it through attributes on `ControllerAdvice`:
 
 [source,java,indent=0,subs="verbatim,quotes"]
 ----
