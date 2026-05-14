@@ -28,8 +28,6 @@ For example:
 	}
 ----
 
-
-
 NOTE: It is also possible to configure `disallowedFields`, but that's fragile, and
 due to be https://github.com/spring-projects/spring-framework/issues/36802[deprecated] in Spring Framework 7.1.
 It is easy to miss or add others over time that should also be excluded.
@@ -39,3 +37,16 @@ This is fine with immutable objects and dedicated objects, but for domain object
 remember to declare `allowFields`. To ensure data binding is only used in declarative style where
 expected inputs are explicitly declared, you can set  `declarativeBinding=true` on `DataBinder`.
 In this mode, `DataBinding` applies constructor binding, and additionally setter binding if `allowedFields` is set.
+The below shows how to set this flag globally:
+
+[source,java,indent=0,subs="verbatim,quotes"]
+----
+	@ControllerAdvice
+	public class ControllerConfig {
+
+		@InitBinder
+		void initBinder(WebDataBinder binder) {
+			binder.setDeclarativeBinding(true);
+		}
+	}
+----
