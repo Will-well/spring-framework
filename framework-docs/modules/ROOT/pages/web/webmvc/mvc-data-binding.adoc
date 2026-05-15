@@ -9,7 +9,7 @@ It is a core mechanism of the Spring Framework that helps with application confi
 In web applications it makes it easy to access query parameters and form data through richly typed objects rather than through maps of string values.
 
 To learn more about the data binding mechanism, including constructor and setter binding, property name syntax, type conversion,
-and more, see the xref:core/validation/data-binding.adoc[Data binding] in the Core Technologies section.
+and more, see xref:core/validation/data-binding.adoc[Data binding] in the Core Technologies section.
 
 For annotated controllers, data binding applies to a
 xref:web/webmvc/mvc-controller/ann-methods/modelattrib-method-args.adoc[@ModelAttribute] method argument.
